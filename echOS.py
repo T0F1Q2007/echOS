@@ -1,8 +1,10 @@
 import os
 import time
+import requests
 
 #Variables
 location = os.getcwd()
+link="https://raw.githubusercontent.com/T0F1Q2007/echOS/main/echOS.py"
 
 def help():
     print("""
@@ -33,7 +35,15 @@ def update_offline():
     exit()
 
 def update_online():
-    print("Soon. . .")
+    path=os.path.join(location,"echOS.py")
+    echOs_py = requests.get(link)
+    if echOs_py.status_code == 200:
+        with open(path, 'wb') as file:
+            file.write(echOs_py.content)
+        print("Update downloaded successfully.")
+    else:
+        print("Failed to download the update file.")
+    os.system("echOS.py")
 
 def riname(file: str,new: str):
     os.rename(os.path.join(location,file),new)
@@ -95,7 +105,7 @@ def coms(com: str):
         help()
     elif com=="duolingo":
         try:
-            os.system(os.path.join("C:/Users/user/Desktop","Duolingo.url"))
+            os.system(os.path.join(location,"Duolingo.url"))
         except:
             print("Not available!")
 
@@ -107,6 +117,6 @@ def home():
         coms(exit)
 
 #Start the system
-print("""ECH OS version 0.12d (beta).
+print("""ECH OS version 0.13d (beta).
 All rights reserved©.""")
 home()
