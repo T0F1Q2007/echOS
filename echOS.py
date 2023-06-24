@@ -62,7 +62,14 @@ def delobj(file: str):
 
 def delpk(directory: str):
     path = os.path.join(location,directory)
-    os.rmdir(path)
+    path_files = os.listdir(os.path.join(location,directory))
+    if len(path_files)==0:
+        os.rmdir(path)
+    else:
+        for i in range(0,len(path_files)):
+            print(f"Deleting {path_files[i]}")
+            os.remove(os.path.join(location,path_files[i]))
+        os.rmdir(path)
 
 def coms(com: str):
     if com=="exit":
@@ -72,33 +79,33 @@ def coms(com: str):
             dots+=" ."
             time.sleep(0.1)
         exit()
-    elif "newpk" in com:
+    elif "newpk " in com:
         com=com.replace("newpk ","")
         newpk(com)
     elif com=="allist":
         print(os.listdir())
     elif com=="dela":
         os.system("clear")
-    elif "delpk" in com:
+    elif "delpk " in com:
         com=com.replace("delpk ","")
         delpk(com)
-    elif "delobj" in com:
+    elif "delobj " in com:
         com=com.replace("delobj ","")
         delobj(com)
-    elif "rid" in com:
+    elif "rid " in com:
         com=com.replace("rid ","")
         ridfile(com)
-    elif "riname" in com:
+    elif "riname " in com:
         com=com.replace("riname ","")
         new=input("Enter the new name: ")
         riname(com,new)
-    elif "update" in com:
+    elif "update " in com:
         com=com.replace("update ","")
         if com=="offline":
             update_offline()
         elif com=="online":
             update_online()
-    elif "space" in com:
+    elif "space " in com:
         com=com.replace("space ","")
         spaceoffile(com)
     elif com=="help":
@@ -108,7 +115,9 @@ def coms(com: str):
             os.system(os.path.join(location,"Duolingo.url"))
         except:
             print("Not available!")
-
+    elif "pk " in com:
+        com=com.replace("pk ","")
+        os.chdir(com)
 
 def home():
     port=""
@@ -117,6 +126,7 @@ def home():
         coms(exit)
 
 #Start the system
-print("""ECH OS version 0.13d (beta).
+print("""ECH OS version 0.15p (beta).
 All rights reserved©.""")
 home()
+#Original version
