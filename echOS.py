@@ -66,10 +66,7 @@ def delpk(directory: str):
     if len(path_files)==0:
         os.rmdir(path)
     else:
-        for i in range(0,len(path_files)):
-            print(f"Deleting {path_files[i]}")
-            os.remove(os.path.join(location,path_files[i]))
-        os.rmdir(path)
+        print("First, delete all items one by one.")
 
 def coms(com: str):
     if com=="exit":
