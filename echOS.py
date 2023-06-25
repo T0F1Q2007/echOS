@@ -31,7 +31,7 @@ def spaceoffile(file: str):
         print(((int(os.path.getsize(file)))/1024)/1024,"mb")
 
 def update_offline():
-    os.system("echOS.py")
+    os.system(os.path.join(location,"echOS.py"))
     exit()
 
 def update_online():
@@ -44,6 +44,16 @@ def update_online():
     else:
         print("Failed to download the update file.")
     os.system("echOS.py")
+
+def downloader(linkE: str,name: str):
+    path=os.path.join(location,name)
+    name_1 = requests.get(linkE)
+    if name_1.status_code == 200:
+        with open(path, 'wb') as file:
+            file.write(name_1.content)
+        print("Downloaded!")
+    else:
+        print("Error!")
 
 def riname(file: str,new: str):
     os.rename(os.path.join(location,file),new)
@@ -78,14 +88,20 @@ def coms(com: str):
         exit()
     elif "newpk " in com:
         com=com.replace("newpk ","")
-        newpk(com)
+        if os.path.exists(com)==False:
+            newpk(com)
+        else:
+            print("Directory already exists!")
     elif com=="allist":
         print(os.listdir())
     elif com=="dela":
         os.system("clear")
     elif "delpk " in com:
         com=com.replace("delpk ","")
-        delpk(com)
+        if os.path.exists(com)==True:
+            delpk(com)
+        else:
+            print("Directory does not exists!")
     elif "delobj " in com:
         com=com.replace("delobj ","")
         delobj(com)
@@ -109,12 +125,15 @@ def coms(com: str):
         help()
     elif com=="duolingo":
         try:
-            os.system(os.path.join(location,"Duolingo.url"))
+            os.system("Duolingo.url")
         except:
-            print("Not available!")
+            downloader("https://raw.githubusercontent.com/T0F1Q2007/echOS/main/Duolingo.url","Duolingo.url")
     elif "pk " in com:
         com=com.replace("pk ","")
-        os.chdir(com)
+        if os.path.exists(com)==True:
+            os.chdir(com)
+        else:
+            print("Directory does not exists!")
 
 def home():
     port=""
@@ -123,7 +142,7 @@ def home():
         coms(exit)
 
 #Start the system
-print("""ECH OS version 0.15p (beta).
+print("""ECH OS version 0.16p (beta).
 All rights reserved©.""")
 home()
 #Original version
