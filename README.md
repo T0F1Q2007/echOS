@@ -12,7 +12,7 @@ version 0.17m : All name of the local file - myer
 version 0.18a : Show all elements of any directory - allist _directory_
 
 --------------------------------------------------------
-<button class="sapport">Support</sapport
+<button class="sapport">Support</sapport>
 <style>
 .style{
   color: blue
